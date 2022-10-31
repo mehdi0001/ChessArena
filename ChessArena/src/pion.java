@@ -22,6 +22,7 @@ public class pion {
                 {" "," "," "," "," "," "," "," "},
                 {"P","P","P","P","P","P","P","P"},
                 {"R","N","B","Q","K","B","N","R"}};
+        		
         arrayToBitboards(Echiquier,BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
     }
  
@@ -58,6 +59,10 @@ public class pion {
             }
         }
         drawArray(BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
+        UI.BP=BP; UI.BN=BN; UI.BB=BB;
+        UI.BR=BR; UI.BQ=BQ; UI.BK=BK;
+        UI.NP=NP; UI.NN=NN; UI.NB=NB;
+        UI.NR=NR; UI.NQ=NQ; UI.NK=NK;
     }
     public static long convertStringToBitboard(String Binaire) {
         if (Binaire.charAt(0)=='0') {//not going to be a negative number
