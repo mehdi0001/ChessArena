@@ -6,7 +6,7 @@ public class UI {
 	}
     public static void Monjeu() {
     	pion.EchiquierInitiale();
-    	movePawn.MouvementCandidat("",BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
+    	Moves.MouvementCandidat("",BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
     	
     }
 
