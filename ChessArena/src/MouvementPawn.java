@@ -21,14 +21,14 @@ public class MouvementPawn extends Moves {
 	        {
 	            int eFile=ancien_mvt.charAt(ancien_mvt.length()-1)-'0';
 	            //en passant right
-	            long possibility = (BP << 1)&BP&ligne_5&~colonne_A&FileMasks8[eFile];//shows piece to remove, not the destination
+	            long possibility = (BP << 1)&NP&ligne_5&~colonne_A&FileMasks8[eFile];//shows piece to remove, not the destination
 	            if (possibility != 0)
 	            {
 	                int index=Long.numberOfTrailingZeros(possibility);
 	                list+=""+(index%8-1)+(index%8)+" E";
 	            }
 	            //en passant left
-	            possibility = (BP >> 1)&BP&ligne_5&~colonne_H&FileMasks8[eFile];//shows piece to remove, not the destination
+	            possibility = (BP >> 1)&NP&ligne_5&~colonne_H&FileMasks8[eFile];//shows piece to remove, not the destination
 	            if (possibility != 0)
 	            {
 	                int index=Long.numberOfTrailingZeros(possibility);
@@ -123,17 +123,5 @@ public class MouvementPawn extends Moves {
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
 }
-    public static void drawEchiquier(long bit) {
-        String echiquier[][]=new String[8][8];
-        for (int i=0;i<64;i++) {
-        	echiquier[i/8][i%8]="";
-        }
-        for (int i=0;i<64;i++) {
-            if (((bit>>>i)&1)==1) {echiquier[i/8][i%8]="P";}
-            if ("".equals(echiquier[i/8][i%8])) {echiquier[i/8][i%8]=" ";}
-        }
-        for (int i=0;i<8;i++) {
-            System.out.println(Arrays.toString(echiquier[i]));
-        }
-    }
+  
 }
