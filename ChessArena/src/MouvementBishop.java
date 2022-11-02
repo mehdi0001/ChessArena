@@ -1,14 +1,14 @@
 
 public class MouvementBishop extends Moves {
-    public static String CoutPossibleB(long CaseOccupe,long BB)
+    public static String CoutPossibleB(long CaseOccupe,long B)
     {
         String list="";
-        long i=BB&~(BB-1);
+        long i=B&~(B-1);
         long possibility;
         while(i != 0)
         {
             int iLocation=Long.numberOfTrailingZeros(i);
-            possibility=MouvementDiag(iLocation)&CaseNBlanche;
+            possibility=MouvementDiag(iLocation)&Nmien;
             //drawEchiquier(possibility);
             long j=possibility&~(possibility-1);
             while (j != 0)
@@ -18,8 +18,8 @@ public class MouvementBishop extends Moves {
                 possibility&=~j;
                 j=possibility&~(possibility-1);
             }
-            BB&=~i;
-            i=BB&~(BB-1);
+            B&=~i;
+            i=B&~(B-1);
         }
         return list;
     }

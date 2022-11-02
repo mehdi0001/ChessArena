@@ -1,14 +1,14 @@
 
 public class MouvementQueen extends Moves {
-    public static String CoutPossibleQ(long OCCUPIED,long BQ)
+    public static String CoutPossibleQ(long CaseOccupe,long Q)
     {
         String list="";
-        long i=BQ&~(BQ-1);
+        long i=Q&~(Q-1);
         long possibility;
         while(i != 0)
         {
             int iLocation=Long.numberOfTrailingZeros(i);
-            possibility=(MouvementVH(iLocation)|MouvementDiag(iLocation))&CaseNBlanche;
+            possibility=(MouvementVH(iLocation)|MouvementDiag(iLocation))&Nmien;
             long j=possibility&~(possibility-1);
             //drawEchiquier(possibility);
             while (j != 0)
@@ -18,8 +18,8 @@ public class MouvementQueen extends Moves {
                 possibility&=~j;
                 j=possibility&~(possibility-1);
             }
-            BQ&=~i;
-            i=BQ&~(BQ-1);
+            Q&=~i;
+            i=Q&~(Q-1);
         }
         return list;
     }

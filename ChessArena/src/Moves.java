@@ -7,10 +7,14 @@ public class Moves {
     static long ligne_4=1095216660480L;
     static long ligne_5=4278190080L;
     static long ligne_8=255L;
-    static long pionNoir;
+    static long mien;
     static long CaseLibre;
     static long CaseOccupe;
-    static long CaseNBlanche;
+    static long Nmien;
+    static long espaceN=43234889994L;
+    static long espaceK=460039L;
+    static long colonne_AB=217020518514230019L;
+    static long colonne_GH=-4557430888798830400L;
 
     static long RankMasks8[] =/*ligne1 à ligne8*/
         {
@@ -52,18 +56,36 @@ public class Moves {
         return (possibilitiesDiagonal&DiagonalMasks8[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal&AntiDiagonalMasks8[(s / 8) + 7 - (s % 8)]);
     } 
     
-    public static String MouvementCandidat(String ancien_mvt,long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK) {
-    	pionNoir=NP|NN|NB|NR|NQ;  //tous les pions noires sauf le king NK 
-    	CaseLibre=~(BP|BN|BB|BR|BQ|BK|NP|NN|NB|NR|NQ|NK);  // Toutes les cases libres 
-    	CaseOccupe = BP|BN|BB|BR|BQ|BK|NP|NN|NB|NR|NQ|NK;
-    	CaseNBlanche = ~(BP|BN|BB|BR|BQ|BK|NK);
+    public static String MouvementCandidatB(String ancien_mvt,long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK) {
+    	mien=BP|BN|BB|BR|BQ;  //tous les pions sauf le king NK 
+    	CaseOccupe = BP|BN|BB|BR|BQ|BK|NP|NN|NB|NR|NQ|NK; 
+    	CaseLibre=~CaseOccupe;  // Toutes les cases libres
+    	Nmien = ~(BP|BN|BB|BR|BQ|BK|NK);
     	//MouvementVH(36);
     	//MouvementDiag(36);
         //timeExperiment(WP);
-        String list=MouvementPawn.CoutPossibleP(ancien_mvt,BP,NP)+
+        String list=MouvementPawn.CoutPossibleBP(ancien_mvt,BP,NP)+
         		MouvementBishop.CoutPossibleB(CaseOccupe, BB)+
         		MouvementCastle.CoutPossibleR(CaseOccupe,BR)+
-        		MouvementQueen.CoutPossibleQ(CaseOccupe, BQ);
+        		MouvementQueen.CoutPossibleQ(CaseOccupe, BQ)+
+        		MouvementHorse.CoutPossibleN(CaseOccupe, BN)+
+        		MouvementKing.CoutPossibleK(CaseOccupe, BK);
+        return list;
+    }
+    public static String MouvementCandidatN(String ancien_mvt,long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK) {
+    	mien=NP|NN|NB|NR|NQ;  //tous les pions noires sauf le king NK 
+    	CaseOccupe = BP|BN|BB|BR|BQ|BK|NP|NN|NB|NR|NQ|NK;
+    	CaseLibre=~CaseOccupe;  // Toutes les cases libres 
+    	Nmien = ~(NP|NN|NB|NR|NQ|NK|BK);
+    	//MouvementVH(36);
+    	//MouvementDiag(36);
+        //timeExperiment(WP);
+        String list=MouvementPawn.CoutPossibleNP(ancien_mvt,NP,BP)+
+        		MouvementBishop.CoutPossibleB(CaseOccupe, NB)+
+        		MouvementCastle.CoutPossibleR(CaseOccupe,NR)+
+        		MouvementQueen.CoutPossibleQ(CaseOccupe, NQ)+
+        		MouvementHorse.CoutPossibleN(CaseOccupe, NN)+
+        		MouvementKing.CoutPossibleK(CaseOccupe, NK);
         return list;
     }
     public static void drawEchiquier(long bit) {

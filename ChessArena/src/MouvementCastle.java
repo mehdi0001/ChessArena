@@ -1,15 +1,15 @@
 
 public class MouvementCastle extends Moves {
-    public static String CoutPossibleR(long CaseOccupe,long BR)
+    public static String CoutPossibleR(long CaseOccupe,long R)
     {
     	
     	String list="";
-        long i=BR&~(BR-1);
+        long i=R&~(R-1);
         long possibility;
         while(i != 0)
         {
             int iLocation=Long.numberOfTrailingZeros(i);
-            possibility=MouvementVH(iLocation)&CaseNBlanche;
+            possibility=MouvementVH(iLocation)&Nmien;
             //drawEchiquier(possibility);
             long j=possibility&~(possibility-1);
             while (j != 0)
@@ -19,8 +19,8 @@ public class MouvementCastle extends Moves {
                 possibility&=~j;
                 j=possibility&~(possibility-1);
             }
-            BR&=~i;
-            i=BR&~(BR-1);
+            R&=~i;
+            i=R&~(R-1);
         }
         return list;
     }

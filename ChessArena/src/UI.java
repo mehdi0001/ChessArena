@@ -7,8 +7,10 @@ public class UI {
     public static void Monjeu() {
     	pion.EchiquierInitiale();
     	System.out.println("\n\n");
-    	Moves.MouvementCandidat("",BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
-    	
+    	//Moves.MouvementCandidatB("",BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
+    	//MouvementKing.danger_N(BP, BN, BB, BR, BQ, BK, NP, NN, NB, NR, NQ, NK);
+    	//Moves.MouvementCandidatN("",BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
+    	//MouvementKing.danger_B(BP, BN, BB, BR, BQ, BK, NP, NN, NB, NR, NQ, NK);
     }
 
 }
