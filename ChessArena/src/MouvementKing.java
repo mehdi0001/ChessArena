@@ -30,6 +30,34 @@ public class MouvementKing extends Moves {
         }
         return list;
 	}
+	
+    public static String CoutPossibleCB(long BR,boolean CWK,boolean CWQ)
+    {
+        String list="";
+        if (CWK&&(((1L<<PositionR[0])&BR)!=0))
+        {
+            list+="7476";
+        }
+        if (CWQ&&(((1L<<PositionR[1])&BR)!=0))
+        {
+            list+="7472";
+        }
+        return list;
+    }
+    public static String CoutPossibleCN(long NR,boolean CBK,boolean CBQ)
+    {
+        String list="";
+        if (CBK&&(((1L<<PositionR[2])&NR)!=0))
+        {
+            list+="0406";
+        }
+        if (CBQ&&(((1L<<PositionR[3])&NR)!=0))
+        {
+            list+="0402";
+        }
+        return list;
+    }
+	
     public static long danger_N(long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK)
     {
         long danger;

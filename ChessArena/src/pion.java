@@ -15,7 +15,7 @@ public class pion {
         long BP=0L,BN=0L,BB=0L,BR=0L,BQ=0L,BK=0L,NP=0L,NN=0L,NB=0L,NR=0L,NQ=0L,NK=0L;
         String Echiquier[][]={
                 {"r","n","b","q","k","b","n","r"},
-                {"p","p","p","p","p","p","p","p"},
+        		{"p","p","p","p","p","p","p","p"},
                 {" "," "," "," "," "," "," "," "},
                 {" "," "," "," "," "," "," "," "},
                 {" "," "," "," "," "," "," "," "},

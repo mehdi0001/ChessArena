@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class MouvementPawn extends Moves {
-	public static String CoutPossibleBP(String ancien_mvt,long BP,long NP) {
+	public static String CoutPossibleBP(long BP,long NP, long EP) {
 		String list="";
 	    //x1,y1,x2,y2
 	    //x1:ligne depart ,x2:ligne arrivee, y1: colonne depart, y2: colonne arrivee
@@ -15,31 +15,24 @@ public class MouvementPawn extends Moves {
 	    PromotionCaptureLB(list, BP);
 	    Promotion1forwardB(list, BP);
 	    //y1,y2,Space,"E
-	    if (ancien_mvt.length()>=4)//1636
-	    {
-	        if ((ancien_mvt.charAt(ancien_mvt.length()-1)==ancien_mvt.charAt(ancien_mvt.length()-3)) && Math.abs(ancien_mvt.charAt(ancien_mvt.length()-2)-ancien_mvt.charAt(ancien_mvt.length()-4))==2)
-	        {
-	            int eFile=ancien_mvt.charAt(ancien_mvt.length()-1)-'0';
-	            //en passant right
-	            long possibility = (BP << 1)&NP&ligne_5&~colonne_A&FileMasks8[eFile];//shows piece to remove, not the destination
-	            if (possibility != 0)
-	            {
-	                int index=Long.numberOfTrailingZeros(possibility);
-	                list+=""+(index%8-1)+(index%8)+" E";
-	            }
-	            //en passant left
-	            possibility = (BP >> 1)&NP&ligne_5&~colonne_H&FileMasks8[eFile];//shows piece to remove, not the destination
-	            if (possibility != 0)
-	            {
-	                int index=Long.numberOfTrailingZeros(possibility);
-	                list+=""+(index%8+1)+(index%8)+" E";
-	            }
-	        }
-	    }
-	   return list;
+        //en passant right
+        long possibility = (BP << 1)&NP&ligne_5&~colonne_A&EP;//shows piece to remove, not the destination
+        if (possibility != 0)
+        {
+            int index=Long.numberOfTrailingZeros(possibility);
+            list+=""+(index%8-1)+(index%8)+" E";
+        }
+        //en passant left
+        possibility = (BP >> 1)&NP&ligne_5&~colonne_H&EP;//shows piece to remove, not the destination
+        if (possibility != 0)
+        {
+            int index=Long.numberOfTrailingZeros(possibility);
+            list+=""+(index%8+1)+(index%8)+" E";
+        }
+       return list;
 }
 	
-	public static String CoutPossibleNP(String ancien_mvt,long NP,long BP) 
+	public static String CoutPossibleNP(long NP,long BP, long EP) 
 	{
 		String list="";
         //x1,y1,x2,y2 
@@ -52,26 +45,19 @@ public class MouvementPawn extends Moves {
 		Promotion1forwardB(list, BP);
 		Promotion1forwardN(list, NP);
         //y1,y2,"bE"
-        if (ancien_mvt.length()>=4)
+        //en passant right
+        long possibility = (NP >> 1)&BP&ligne_4&~colonne_H&EP;//shows piece to remove, not the destination
+        if (possibility != 0)
         {
-            if ((ancien_mvt.charAt(ancien_mvt.length()-1)==ancien_mvt.charAt(ancien_mvt.length()-3)) && Math.abs(ancien_mvt.charAt(ancien_mvt.length()-2)-ancien_mvt.charAt(ancien_mvt.length()-4))==2)
-            {
-                int eFile=ancien_mvt.charAt(ancien_mvt.length()-1)-'0';
-                //en passant right
-                long possibility = (NP >> 1)&BP&ligne_4&~colonne_H&FileMasks8[eFile];//shows piece to remove, not the destination
-                if (possibility != 0)
-                {
-                    int index=Long.numberOfTrailingZeros(possibility);
-                    list+=""+(index%8+1)+(index%8)+"bE";
-                }
-                //en passant left
-                possibility = (NP << 1)&BP&ligne_4&~colonne_A&FileMasks8[eFile];//shows piece to remove, not the destination
-                if (possibility != 0)
-                {
-                    int index=Long.numberOfTrailingZeros(possibility);
-                    list+=""+(index%8-1)+(index%8)+"bE";
-                }
-            }
+            int index=Long.numberOfTrailingZeros(possibility);
+            list+=""+(index%8+1)+(index%8)+"bE";
+        }
+        //en passant left
+        possibility = (NP << 1)&BP&ligne_4&~colonne_A&EP;//shows piece to remove, not the destination
+        if (possibility != 0)
+        {
+            int index=Long.numberOfTrailingZeros(possibility);
+            list+=""+(index%8-1)+(index%8)+"bE";
         }
        return list;
 	}
