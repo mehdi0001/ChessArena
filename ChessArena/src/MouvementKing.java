@@ -36,11 +36,15 @@ public class MouvementKing extends Moves {
         String list="";
         if (CWK&&(((1L<<PositionR[0])&BR)!=0))
         {
-            list+="7476";
+            if ((CaseOccupe&((1L<<61)|(1L<<62)))==0) {
+                list+="7476";
+            }
         }
         if (CWQ&&(((1L<<PositionR[1])&BR)!=0))
         {
-            list+="7472";
+            if ((CaseOccupe&((1L<<57)|(1L<<58)|(1L<<59)))==0) {
+                list+="7472";
+            }
         }
         return list;
     }
@@ -49,11 +53,15 @@ public class MouvementKing extends Moves {
         String list="";
         if (CBK&&(((1L<<PositionR[2])&NR)!=0))
         {
-            list+="0406";
+            if ((CaseOccupe&((1L<<5)|(1L<<6)))==0) {
+                list+="0406";
+            }
         }
         if (CBQ&&(((1L<<PositionR[3])&NR)!=0))
         {
-            list+="0402";
+            if ((CaseOccupe&((1L<<1)|(1L<<2)|(1L<<3)))==0) {
+                list+="0402";
+            }
         }
         return list;
     }

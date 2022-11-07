@@ -6,28 +6,28 @@ public class MouvementPawn extends Moves {
 	    //x1,y1,x2,y2
 	    //x1:ligne depart ,x2:ligne arrivee, y1: colonne depart, y2: colonne arrivee
 	    
-		capture_rightB(list, BP);
-		capture_leftB(list, BP);
-	    move_1_forwardB(list, BP,CaseLibre,ligne_8);
-	    move_2_forwardB(list, BP,CaseLibre,ligne_4);
+		list= capture_rightB(list, BP);
+		list= capture_leftB(list, BP);
+	    list= move_1_forwardB(list, BP,CaseLibre,ligne_8);
+	    list=move_2_forwardB(list, BP,CaseLibre,ligne_4);
 	    //y1,y2,Promotion Type,"P"
-	    PromotionCaptureRB(list, BP);
-	    PromotionCaptureLB(list, BP);
-	    Promotion1forwardB(list, BP);
-	    //y1,y2,Space,"E
+	    list=PromotionCaptureRB(list, BP);
+	    list=PromotionCaptureLB(list, BP);
+	    list=Promotion1forwardB(list, BP);
+	    //y1,y2,"BE"
         //en passant right
         long possibility = (BP << 1)&NP&ligne_5&~colonne_A&EP;//shows piece to remove, not the destination
         if (possibility != 0)
         {
             int index=Long.numberOfTrailingZeros(possibility);
-            list+=""+(index%8-1)+(index%8)+" E";
+            list+=""+(index%8-1)+(index%8)+"BE";
         }
         //en passant left
         possibility = (BP >> 1)&NP&ligne_5&~colonne_H&EP;//shows piece to remove, not the destination
         if (possibility != 0)
         {
             int index=Long.numberOfTrailingZeros(possibility);
-            list+=""+(index%8+1)+(index%8)+" E";
+            list+=""+(index%8+1)+(index%8)+"BE";
         }
        return list;
 }
@@ -36,34 +36,34 @@ public class MouvementPawn extends Moves {
 	{
 		String list="";
         //x1,y1,x2,y2 
-		capture_rightN(list, NP);
-		capture_leftN(list, NP);
-		move_1_forwardN(list, NP, CaseLibre, ligne_1);
-		move_2_forwardN(list, NP, CaseLibre, ligne_5);
+		list=capture_rightN(list, NP);
+		list=capture_leftN(list, NP);
+		list=move_1_forwardN(list, NP, CaseLibre, ligne_1);
+		list=move_2_forwardN(list, NP, CaseLibre, ligne_5);
         //y1,y2,Promotion Type,"P"
-		PromotionCaptureRN(list, NP);
-		Promotion1forwardB(list, BP);
-		Promotion1forwardN(list, NP);
-        //y1,y2,"bE"
+		list=PromotionCaptureRN(list, NP);
+		list=PromotionCaptureLN(list, NP);
+		list=Promotion1forwardN(list, NP);
+        //y1,y2,"NE"
         //en passant right
         long possibility = (NP >> 1)&BP&ligne_4&~colonne_H&EP;//shows piece to remove, not the destination
         if (possibility != 0)
         {
             int index=Long.numberOfTrailingZeros(possibility);
-            list+=""+(index%8+1)+(index%8)+"bE";
+            list+=""+(index%8+1)+(index%8)+"NE";
         }
         //en passant left
         possibility = (NP << 1)&BP&ligne_4&~colonne_A&EP;//shows piece to remove, not the destination
         if (possibility != 0)
         {
             int index=Long.numberOfTrailingZeros(possibility);
-            list+=""+(index%8-1)+(index%8)+"bE";
+            list+=""+(index%8-1)+(index%8)+"NE";
         }
        return list;
 	}
 	
-	public static void capture_rightB(String list, long BP) {
-	    long mvt_pion=(BP>>7)&mien&~ligne_8&~colonne_A;//capture right
+	public static String capture_rightB(String list, long BP) {
+	    long mvt_pion=(BP>>7)&Nmien&CaseOccupe&~ligne_8&~colonne_A;//capture right
 	    //drawEchiquier(mvt_pion);
 	    long possibility=mvt_pion&~(mvt_pion-1);
 	    while (possibility != 0)
@@ -73,9 +73,10 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
-	public static void capture_rightN(String list, long NP) {
-		long mvt_pion=(NP<<7)&mien&~ligne_1&~colonne_H;//capture right
+	public static String capture_rightN(String list, long NP) {
+		long mvt_pion=(NP<<7)&Nmien&CaseOccupe&~ligne_1&~colonne_H;//capture right
 		//drawEchiquier(mvt_pion);
 		long possibility=mvt_pion&~(mvt_pion-1);
         while (possibility != 0)
@@ -85,9 +86,10 @@ public class MouvementPawn extends Moves {
             mvt_pion&=~possibility;
             possibility=mvt_pion&~(mvt_pion-1);
         }
+        return list;
 	}
-	public static void capture_leftB(String list, long BP) {
-		long mvt_pion=(BP>>9)&mien&~ligne_8&~colonne_H;//capture left
+	public static String capture_leftB(String list, long BP) {
+		long mvt_pion=(BP>>9)&Nmien&CaseOccupe&~ligne_8&~colonne_H;//capture left
 		//drawEchiquier(mvt_pion);
 	    long possibility=mvt_pion&~(mvt_pion-1);
 	    while (possibility != 0)
@@ -97,9 +99,10 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 }
-	public static void capture_leftN(String list, long NP) {
-		long mvt_pion=(NP<<9)&mien&~ligne_1&~colonne_A;//capture left
+	public static String capture_leftN(String list, long NP) {
+		long mvt_pion=(NP<<9)&Nmien&CaseOccupe&~ligne_1&~colonne_A;//capture left
 		//drawEchiquier(mvt_pion);
 		long possibility=mvt_pion&~(mvt_pion-1);
 	    while (possibility != 0)
@@ -109,8 +112,9 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
-	public static void move_2_forwardB(String list, long BP,long CaseLibre,long ligne_4){  //move 2 forward
+	public static String move_2_forwardB(String list, long BP,long CaseLibre,long ligne_4){  //move 2 forward
 		long mvt_pion=(BP>>16)&CaseLibre&(CaseLibre>>8)&ligne_4;
 	    long possibility=mvt_pion&~(mvt_pion-1);
 	    //drawEchiquier(mvt_pion);
@@ -121,8 +125,9 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
-	public static void move_2_forwardN(String list, long NP,long CaseLibre,long ligne_5){
+	public static String move_2_forwardN(String list, long NP,long CaseLibre,long ligne_5){
 		long mvt_pion=(NP<<16)&CaseLibre&(CaseLibre<<8)&ligne_5;//move 2 forward
         long possibility=mvt_pion&~(mvt_pion-1);
         //drawEchiquier(mvt_pion);
@@ -133,21 +138,22 @@ public class MouvementPawn extends Moves {
             mvt_pion&=~possibility;
             possibility=mvt_pion&~(mvt_pion-1);
         }
+        return list;
 	}
-	public static void move_1_forwardB(String list, long BP,long CaseLibre,long ligne_8){   //move 1 forward
-	    long mvt_pion=(BP>>8)&CaseLibre&~ligne_8;
-	    //drawEchiquier(mvt_pion);
-	    long possibility=mvt_pion&~(mvt_pion-1);
-	    while (possibility != 0)
-	    {
-	        int index=Long.numberOfTrailingZeros(possibility);
-	        list+=""+(index/8+1)+(index%8)+(index/8)+(index%8);
-	        mvt_pion&=~possibility;
-	        possibility=mvt_pion&~(mvt_pion-1);
-	    }
+	public static String move_1_forwardB(String list, long BP,long CaseLibre,long ligne_8){   //move 1 forward
+		long mvt_pion=(BP>>8)&CaseLibre&~ligne_8;//move 1 forward
+        long possibility=mvt_pion&~(mvt_pion-1);
+        while (possibility != 0)
+        {
+            int index=Long.numberOfTrailingZeros(possibility);
+            list+=""+(index/8+1)+(index%8)+(index/8)+(index%8);
+            mvt_pion&=~possibility;
+            possibility=mvt_pion&~(mvt_pion-1);
+        }
+        return list;
 	}
 	
-	public static void move_1_forwardN(String list, long NP,long CaseLibre,long ligne_1){   //move 1 forward
+	public static String move_1_forwardN(String list, long NP,long CaseLibre,long ligne_1){   //move 1 forward
 		long mvt_pion=(NP<<8)&CaseLibre&~ligne_1;
 		//drawEchiquier(mvt_pion);
 		long possibility=mvt_pion&~(mvt_pion-1);
@@ -158,10 +164,11 @@ public class MouvementPawn extends Moves {
             mvt_pion&=~possibility;
             possibility=mvt_pion&~(mvt_pion-1);
         }
+        return list;
 	}
 	
-	public static void PromotionCaptureRB(String list, long BP) {    //pawn promotion by capture right
-	    long mvt_pion=(BP>>7)&mien&ligne_8&~colonne_A;
+	public static String PromotionCaptureRB(String list, long BP) {    //pawn promotion by capture right
+	    long mvt_pion=(BP>>7)&Nmien&CaseOccupe&ligne_8&~colonne_A;
 	    //drawEchiquier(mvt_pion);
 	    long possibility=mvt_pion&~(mvt_pion-1);
 	    while (possibility != 0)
@@ -171,9 +178,10 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
-	public static void PromotionCaptureRN(String list, long NP) {    //pawn promotion by capture right
-		long mvt_pion=(NP<<7)&mien&ligne_1&~colonne_H;
+	public static String PromotionCaptureRN(String list, long NP) {    //pawn promotion by capture right
+		long mvt_pion=(NP<<7)&Nmien&CaseOccupe&ligne_1&~colonne_H;
 		//drawEchiquier(mvt_pion);
 		long possibility=mvt_pion&~(mvt_pion-1);
 	    while (possibility != 0)
@@ -183,9 +191,10 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
-	public static void PromotionCaptureLB(String list, long BP) {   //pawn promotion by capture left
-	    long mvt_pion=(BP>>9)&mien&ligne_8&~colonne_H;
+	public static String PromotionCaptureLB(String list, long BP) {   //pawn promotion by capture left
+	    long mvt_pion=(BP>>9)&Nmien&CaseOccupe&ligne_8&~colonne_H;
 	    //drawEchiquier(mvt_pion);
 	    long possibility=mvt_pion&~(mvt_pion-1);
 	    while (possibility != 0)
@@ -195,9 +204,10 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
-	public static void PromotionCaptureLN(String list, long NP) {   //pawn promotion by capture left
-		long mvt_pion=(NP<<9)&mien&ligne_1&~colonne_A;
+	public static String PromotionCaptureLN(String list, long NP) {   //pawn promotion by capture left
+		long mvt_pion=(NP<<9)&Nmien&CaseOccupe&ligne_1&~colonne_A;
 		//drawEchiquier(mvt_pion);
 		long possibility=mvt_pion&~(mvt_pion-1);
 	    while (possibility != 0)
@@ -207,8 +217,9 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
-	public static void Promotion1forwardB(String list, long BP) {   //pawn promotion by move 1 forward
+	public static String Promotion1forwardB(String list, long BP) {   //pawn promotion by move 1 forward
 	    long mvt_pion=(BP>>8)&CaseLibre&ligne_8;
 	    //drawEchiquier(mvt_pion);
 	    long possibility=mvt_pion&~(mvt_pion-1);
@@ -219,8 +230,9 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 }
-	public static void Promotion1forwardN(String list, long NP) {   //pawn promotion by move 1 forward
+	public static String Promotion1forwardN(String list, long NP) {   //pawn promotion by move 1 forward
 		long mvt_pion=(NP<<8)&CaseLibre&ligne_1;
 		//drawEchiquier(mvt_pion);
 		long possibility=mvt_pion&~(mvt_pion-1);
@@ -231,5 +243,6 @@ public class MouvementPawn extends Moves {
 	        mvt_pion&=~possibility;
 	        possibility=mvt_pion&~(mvt_pion-1);
 	    }
+	    return list;
 	}
 }
