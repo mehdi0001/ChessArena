@@ -25,7 +25,94 @@ public class pion {
         		
         arrayToBitboards(Echiquier,BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK);
     }
- 
+    
+    public static void stringFen(String fenString) {
+        //not chess960 compatible
+    	UI.BP=0; UI.BN=0; UI.BB=0;
+        UI.BR=0; UI.BQ=0; UI.BK=0;
+        UI.NP=0; UI.NN=0; UI.NB=0;
+        UI.NR=0; UI.NQ=0; UI.NK=0;
+        UI.CWK=false; UI.CWQ=false;
+        UI.CBK=false; UI.CBQ=false;
+	int charIndex = 0;
+	int boardIndex = 0;
+	while (fenString.charAt(charIndex) != ' ')
+	{
+		switch (fenString.charAt(charIndex++))
+		{
+		case 'P': UI.BP |= (1L << boardIndex++);
+			break;
+		case 'p': UI.NP |= (1L << boardIndex++);
+			break;
+		case 'N': UI.BN |= (1L << boardIndex++);
+			break;
+		case 'n': UI.NN |= (1L << boardIndex++);
+			break;
+		case 'B': UI.BB |= (1L << boardIndex++);
+			break;
+		case 'b': UI.NB |= (1L << boardIndex++);
+			break;
+		case 'R': UI.BR |= (1L << boardIndex++);
+			break;
+		case 'r': UI.NR |= (1L << boardIndex++);
+			break;
+		case 'Q': UI.BQ |= (1L << boardIndex++);
+			break;
+		case 'q': UI.NQ |= (1L << boardIndex++);
+			break;
+		case 'K': UI.BK |= (1L << boardIndex++);
+			break;
+		case 'k': UI.NK |= (1L << boardIndex++);
+			break;
+		case '/':
+			break;
+		case '1': boardIndex++;
+			break;
+		case '2': boardIndex += 2;
+			break;
+		case '3': boardIndex += 3;
+			break;
+		case '4': boardIndex += 4;
+			break;
+		case '5': boardIndex += 5;
+			break;
+		case '6': boardIndex += 6;
+			break;
+		case '7': boardIndex += 7;
+			break;
+		case '8': boardIndex += 8;
+			break;
+		default:
+			break;
+		}
+	}
+	UI.MouveB = (fenString.charAt(++charIndex) == 'w');
+	charIndex += 2;
+	while (fenString.charAt(charIndex) != ' ')
+	{
+		switch (fenString.charAt(charIndex++))
+		{
+		case '-':
+			break;
+		case 'K': UI.CWK = true;
+			break;
+		case 'Q': UI.CWQ = true;
+			break;
+		case 'k': UI.CBK = true;
+			break;
+		case 'q': UI.CBQ = true;
+			break;
+		default:
+			break;
+		}
+	}
+	if (fenString.charAt(++charIndex) != '-')
+	{
+		UI.EP = Moves.FileMasks8[fenString.charAt(charIndex++) - 'a'];
+	}
+	//the rest of the fenString is not yet utilized
+    }
+    
     public static void arrayToBitboards(String[][] Echiquier,long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK) {
         String Binaire;
         for (int i=0;i<64;i++) {

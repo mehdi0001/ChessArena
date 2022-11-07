@@ -11,7 +11,7 @@ public class testPerformance {
     }
     //static int perftTotalMoveCounter=0;
     static int cptMove=0;
-    static int cptProfondeur=5;
+    static int cptProfondeur=1;
     public static void perft(long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK,long EP,boolean CWK,boolean CWQ,boolean CBK,boolean CBQ,boolean MouveB,int depth)
     {
         if (depth<cptProfondeur) {

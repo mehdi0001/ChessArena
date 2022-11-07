@@ -12,6 +12,8 @@ public class UI {
     	//MouvementKing.danger_N(BP, BN, BB, BR, BQ, BK, NP, NN, NB, NR, NQ, NK);
     	//Moves.MouvementCandidatN(BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK,EP,CWK,CWQ,CBK,CBQ);
     	//MouvementKing.danger_B(BP, BN, BB, BR, BQ, BK, NP, NN, NB, NR, NQ, NK);
+    	//pion.stringFen("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -");
+    	//pion.drawArray(BP, BN, BB, BR, BQ, BK, NP, NN, NB, NR, NQ, NK);
     	testPerformance.perft(BP, BN, BB, BR, BQ, BK, NP, NN, NB, NR, NQ, NK, EP, CWK, CWQ, CBK, CBQ, MouveB, 0);
     	System.out.print(testPerformance.cptMove);
     }
