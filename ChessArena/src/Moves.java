@@ -57,7 +57,7 @@ public class Moves {
         return (possibilitiesDiagonal&DiagonalMasks8[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal&AntiDiagonalMasks8[(s / 8) + 7 - (s % 8)]);
     } 
  
-    public static void makeMoveWrong(String move,long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK,long EP,boolean CWK,boolean CWQ,boolean CBK,boolean CBQ) {
+ /*   public static void makeMoveWrong(String move,long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK,long EP,boolean CWK,boolean CWQ,boolean CBK,boolean CBQ) {
         //can not opperate on a single board since moves are not backwards compatable
         EP=0;
         if (Character.isDigit(move.charAt(3))) {
@@ -213,7 +213,7 @@ public class Moves {
         } else {
             System.out.print("error: not a valid move type");
         }
-    }
+    }*/
     
     /*
     long WPt=Moves.makeMove(WP, moves.substring(i,i+4), 'P'), WNt=Moves.makeMove(WN, moves.substring(i,i+4), 'N'),
@@ -242,14 +242,14 @@ public class Moves {
             if (type==move.charAt(2)) {board&=~(1L<<start); board|=(1L<<end);} else {board&=~(1L<<end);}
         } else if (move.charAt(3)=='E') {//en passant
             int start, end;
-            if (Character.isUpperCase(move.charAt(2))) {
-                start=Long.numberOfTrailingZeros(FileMasks8[move.charAt(0)-'0']&RankMasks8[4]);
-                end=Long.numberOfTrailingZeros(FileMasks8[move.charAt(1)-'0']&RankMasks8[5]);
-                board&=~(1L<<(FileMasks8[move.charAt(1)-'0']&RankMasks8[4]));
-            } else {
+            if (move.charAt(2)=='W') {
                 start=Long.numberOfTrailingZeros(FileMasks8[move.charAt(0)-'0']&RankMasks8[3]);
                 end=Long.numberOfTrailingZeros(FileMasks8[move.charAt(1)-'0']&RankMasks8[2]);
-                board&=~(1L<<(FileMasks8[move.charAt(1)-'0']&RankMasks8[3]));
+                board&=~(FileMasks8[move.charAt(1)-'0']&RankMasks8[3]);
+            } else {
+                start=Long.numberOfTrailingZeros(FileMasks8[move.charAt(0)-'0']&RankMasks8[4]);
+                end=Long.numberOfTrailingZeros(FileMasks8[move.charAt(1)-'0']&RankMasks8[5]);
+                board&=~(FileMasks8[move.charAt(1)-'0']&RankMasks8[4]);
             }
             if (((board>>>start)&1)==1) {board&=~(1L<<start); board|=(1L<<end);}
         } else {
