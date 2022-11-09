@@ -57,173 +57,7 @@ public class Moves {
         return (possibilitiesDiagonal&DiagonalMasks8[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal&AntiDiagonalMasks8[(s / 8) + 7 - (s % 8)]);
     } 
  
- /*   public static void makeMoveWrong(String move,long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK,long EP,boolean CWK,boolean CWQ,boolean CBK,boolean CBQ) {
-        //can not opperate on a single board since moves are not backwards compatable
-        EP=0;
-        if (Character.isDigit(move.charAt(3))) {
-            int start=(Character.getNumericValue(move.charAt(0))*8)+(Character.getNumericValue(move.charAt(1)));
-            int end=(Character.getNumericValue(move.charAt(2))*8)+(Character.getNumericValue(move.charAt(3)));
-            if ((BK&(1L<<start))!=0) {//white castle move
-                BK^=(1L<<start);
-                BK^=(1L<<end);
-                if (end>start) {//kingside
-                    BR^=(1L<<63);
-                    BR^=(1L<<61);
-                    CWK=false;
-                } else {//queenside
-                    BR^=(1L<<56);
-                    BR^=(1L<<59);
-                    CWQ=false;
-                }
-            } else if ((NK&(1L<<start))!=0) {//black castle move
-                BK^=(1L<<start);
-                BK^=(1L<<end);
-                if (end>start) {//kingside
-                    BR^=(1L<<7);
-                    BR^=(1L<<5);
-                    CBK=false;
-                } else {//queenside
-                    BR^=1L;
-                    BR^=(1L<<3);
-                    CBQ=false;
-                }
-            } else {//'regular' move
-                //clear destination:
-                BP&=~(1L<<end);
-                BN&=~(1L<<end);
-                BB&=~(1L<<end);
-                BR&=~(1L<<end);
-                BQ&=~(1L<<end);
-                BK&=~(1L<<end);
-                //move piece:
-                if ((BP&(1L<<start))!=0)
-                {
-                    BP^=(1L<<start);
-                    BP^=(1L<<end);
-                    if ((end-start)==16) {//pawn double push
-                        EP=FileMasks8['0'-move.charAt(1)];
-                    }
-                }
-                else if ((NP&(1L<<start))!=0)
-                {
-                    NP^=(1L<<start);
-                    NP^=(1L<<end);
-                    if ((start-end)==16) {//pawn double push
-                        EP=FileMasks8['0'-move.charAt(1)];
-                    }
-                }
-                else if ((BN&(1L<<start))!=0)
-                {
-                    BN^=(1L<<start);
-                    BN^=(1L<<end);
-                }
-                else if ((NN&(1L<<start))!=0)
-                {
-                    NN^=(1L<<start);
-                    NN^=(1L<<end);
-                }
-                else if ((BB&(1L<<start))!=0)
-                {
-                    BB^=(1L<<start);
-                    BB^=(1L<<end);
-                }
-                else if ((NB&(1L<<start))!=0)
-                {
-                    NB^=(1L<<start);
-                    NB^=(1L<<end);
-                }
-                else if ((BR&(1L<<start))!=0)
-                {
-                    BR^=(1L<<start);
-                    BR^=(1L<<end);
-                }
-                else if ((NR&(1L<<start))!=0)
-                {
-                    NR^=(1L<<start);
-                    NR^=(1L<<end);
-                }
-                else if ((BQ&(1L<<start))!=0)
-                {
-                    BQ^=(1L<<start);
-                    BQ^=(1L<<end);
-                }
-                else if ((NQ&(1L<<start))!=0)
-                {
-                    NQ^=(1L<<start);
-                    NQ^=(1L<<end);
-                }
-                else if ((BK&(1L<<start))!=0)
-                {
-                    BK^=(1L<<start);
-                    BK^=(1L<<end);
-                    CWK=false;
-                    CWQ=false;
-                }
-                else if ((NK&(1L<<start))!=0)
-                {
-                    NK^=(1L<<start);
-                    NK^=(1L<<end);
-                    CBK=false;
-                    CBQ=false;
-                }
-                else
-                {
-                    System.out.print("error: can not move empty piece");
-                }
-            }
-        } else if (move.charAt(3)=='P') {//pawn promotion
-            //y1,y2,Promotion Type,"P"
-            if (Character.isUpperCase(move.charAt(2)))//white piece promotion
-            {
-                BP^=(RankMasks8[6]&FileMasks8[move.charAt(0)-'0']);
-                switch (move.charAt(2)) {
-                case 'N': BN^=(RankMasks8[7]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                case 'B': BB^=(RankMasks8[7]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                case 'R': BR^=(RankMasks8[7]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                case 'Q': BQ^=(RankMasks8[7]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                }
-            } else {//black piece promotion
-                BP^=(RankMasks8[1]&FileMasks8[move.charAt(0)-'0']);
-                switch (move.charAt(2)) {
-                case 'n': NN^=(RankMasks8[0]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                case 'b': NB^=(RankMasks8[0]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                case 'r': NR^=(RankMasks8[0]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                case 'q': NQ^=(RankMasks8[0]&FileMasks8[move.charAt(1)-'0']);
-                    break;
-                }
-            }
-        } else if (move.charAt(3)=='E') {//en passant move
-            if (move.charAt(2)=='w') {//white move    
-                //y1,y2,"BE"
-                BP^=(RankMasks8[4]&FileMasks8['0'-move.charAt(0)]);//remove White pawn
-                BP^=(RankMasks8[5]&FileMasks8['0'-move.charAt(1)]);//add white pawn
-                NP^=(RankMasks8[4]&FileMasks8['0'-move.charAt(1)]);//remove black pawn)
-            } else {//black move
-                NP^=(RankMasks8[3]&FileMasks8['0'-move.charAt(0)]);//remove black pawn
-                NP^=(RankMasks8[2]&FileMasks8['0'-move.charAt(1)]);//add black pawn
-                BP^=(RankMasks8[3]&FileMasks8['0'-move.charAt(1)]);//remove white pawn)
-            }
-        } else {
-            System.out.print("error: not a valid move type");
-        }
-    }*/
-    
-    /*
-    long WPt=Moves.makeMove(WP, moves.substring(i,i+4), 'P'), WNt=Moves.makeMove(WN, moves.substring(i,i+4), 'N'),
-    WBt=Moves.makeMove(WB, moves.substring(i,i+4), 'B'), WRt=Moves.makeMove(WR, moves.substring(i,i+4), 'R'),
-    WQt=Moves.makeMove(WQ, moves.substring(i,i+4), 'Q'), WKt=Moves.makeMove(WK, moves.substring(i,i+4), 'K'),
-    BPt=Moves.makeMove(BP, moves.substring(i,i+4), 'p'), BNt=Moves.makeMove(BN, moves.substring(i,i+4), 'n'),
-    BBt=Moves.makeMove(BB, moves.substring(i,i+4), 'b'), BRt=Moves.makeMove(BR, moves.substring(i,i+4), 'r'),
-    BQt=Moves.makeMove(BQ, moves.substring(i,i+4), 'q'), BKt=Moves.makeMove(BK, moves.substring(i,i+4), 'k'),
-    EPt=Moves.makeMoveEP(moves.substring(i,i+4));
-    */
+ 
     
     public static long makeMove(long board, String move, char type) {
         if (Character.isDigit(move.charAt(3))) {//'regular' move
@@ -233,13 +67,13 @@ public class Moves {
         } else if (move.charAt(3)=='P') {//pawn promotion
             int start, end;
             if (Character.isUpperCase(move.charAt(2))) {
-                start=Long.numberOfTrailingZeros(FileMasks8[move.charAt(0)-'0']&RankMasks8[6]);
-                end=Long.numberOfTrailingZeros(FileMasks8[move.charAt(1)-'0']&RankMasks8[7]);
-            } else {
                 start=Long.numberOfTrailingZeros(FileMasks8[move.charAt(0)-'0']&RankMasks8[1]);
                 end=Long.numberOfTrailingZeros(FileMasks8[move.charAt(1)-'0']&RankMasks8[0]);
+            } else {
+                start=Long.numberOfTrailingZeros(FileMasks8[move.charAt(0)-'0']&RankMasks8[6]);
+                end=Long.numberOfTrailingZeros(FileMasks8[move.charAt(1)-'0']&RankMasks8[7]);
             }
-            if (type==move.charAt(2)) {board&=~(1L<<start); board|=(1L<<end);} else {board&=~(1L<<end);}
+            if (type==move.charAt(2)) {board|=(1L<<end);} else {board&=~(1L<<start); board&=~(1L<<end);}
         } else if (move.charAt(3)=='E') {//en passant
             int start, end;
             if (move.charAt(2)=='W') {
@@ -284,7 +118,7 @@ public class Moves {
         		MouvementQueen.CoutPossibleQ(CaseOccupe, BQ)+
         		MouvementHorse.CoutPossibleN(CaseOccupe, BN)+
         		MouvementKing.CoutPossibleK(CaseOccupe, BK)+
-        		MouvementKing.CoutPossibleCB(BR, CWK, CWQ);
+        		MouvementKing.CoutPossibleCB(BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK,CWK,CWQ);
         return list;
     }
     public static String MouvementCandidatN(long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK,long EP,boolean CWK,boolean CWQ,boolean CBK,boolean CBQ) {
@@ -301,7 +135,7 @@ public class Moves {
         		MouvementQueen.CoutPossibleQ(CaseOccupe, NQ)+
         		MouvementHorse.CoutPossibleN(CaseOccupe, NN)+
         		MouvementKing.CoutPossibleK(CaseOccupe, NK)+
-        		MouvementKing.CoutPossibleCN(NR, CBK, CBQ);
+        		MouvementKing.CoutPossibleCN(BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK,CBK,CBQ);
         return list;
     }
     
