@@ -11,7 +11,7 @@ public class testPerformance {
     }
     static int cptPerformanceMove=0;
     static int cptMove=0;
-    static int cptProfondeur=3;
+    static int cptProfondeur=4;
     
     public static void performanceOpt(long BP,long BN,long BB,long BR,long BQ,long BK,long NP,long NN,long NB,long NR,long NQ,long NK,long EP,boolean CWK,boolean CWQ,boolean CBK,boolean CBQ,boolean WhiteToMove,int depth)
     {
