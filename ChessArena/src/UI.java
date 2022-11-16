@@ -3,6 +3,8 @@ import java.util.Scanner;
 public class UI {
 	static long BP=0L,BN=0L,BB=0L,BR=0L,BQ=0L,BK=0L,NP=0L,NN=0L,NB=0L,NR=0L,NQ=0L,NK=0L,EP=0L;
 	static boolean CWK=true,CWQ=true,CBK=true,CBQ=true,MouveB=true;//true=castle is possible
+	static int profondeur=10,Mouvecpt;
+	static int MATE_SCORE=5000,NULL_INT=Integer.MIN_VALUE;
 	public static void main(String[] args) {
 		Monjeu();
 	}
@@ -27,7 +29,7 @@ public class UI {
         }
         System.out.print("Total: "+testPerformance.cptPerformanceMove);
     	//System.out.print(testPerformance.cptMove);*/
-        UCI.uciCommunication();
+        /*UCI.uciCommunication();
         pion.stringFen("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -");
         pion.drawArray(BP, BN, BB, BR, BQ, BK, NP, NN, NB, NR, NQ, NK);
         long startTime=System.currentTimeMillis();
@@ -35,7 +37,15 @@ public class UI {
         long endTime=System.currentTimeMillis();
         System.out.println("Nodes: "+testPerformance.cptPerformanceMove);
         System.out.println("That took "+(endTime-startTime)+" milliseconds");
-        System.out.println("Nodes Per Second: "+(int)(testPerformance.cptPerformanceMove/((endTime-startTime)/1000.0)));
+        System.out.println("Nodes Per Second: "+(int)(testPerformance.cptPerformanceMove/((endTime-startTime)/1000.0)));*/
+    	
+    	pion.stringFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        UCI.inputPrint();
+        long startTime=System.currentTimeMillis();
+        System.out.println(PVS.pvSearch(-1000,1000,BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK,EP,CWK,CWQ,CBK,CBQ,!MouveB,0));
+        long endTime=System.currentTimeMillis();
+        System.out.println("That took "+(endTime-startTime)+" milliseconds");
+        UCI.uciCommunication();
     }
 
 }

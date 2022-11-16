@@ -1,4 +1,3 @@
-/ChessPieces.png
 /MouvementBishop.class
 /MouvementCastle.class
 /MouvementHorse.class
@@ -6,7 +5,9 @@
 /MouvementPawn.class
 /MouvementQueen.class
 /Moves.class
+/UCI.class
 /UI.class
 /pion.class
 /testPerformance.class
-/UCI.class
+/PVS.class
+/Evaluation.class
