@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class UCI {
-    static String ENGINENAME="Orion v1";
+    static String ENGINENAME="UI v1";
     public static void uciCommunication() {
     	Scanner input = new Scanner(System.in);
     	while (true)
@@ -190,6 +190,8 @@ public class UCI {
     
     public static void inputPrint() {
         pion.drawArray(UI.BP,UI.BN,UI.BB,UI.BR,UI.BQ,UI.BK,UI.NP,UI.NN,UI.NB,UI.NR,UI.NQ,UI.NK);
+        System.out.print("Zobrist Hash: ");
+        System.out.println(Zobrist.getZobristHash(UI.BP,UI.BN,UI.BB,UI.BR,UI.BQ,UI.BK,UI.NP,UI.NN,UI.NB,UI.NR,UI.NQ,UI.NK,UI.EP,UI.CWK,UI.CWQ,UI.CBK,UI.CBQ,UI.MouveB));
     }
 	
 }

@@ -39,12 +39,18 @@ public class UI {
         System.out.println("That took "+(endTime-startTime)+" milliseconds");
         System.out.println("Nodes Per Second: "+(int)(testPerformance.cptPerformanceMove/((endTime-startTime)/1000.0)));*/
     	
-    	pion.stringFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        //Zobrist.random64();
+        //Zobrist.testDistribution();
+        Zobrist.zobristFillArray();
+        pion.stringFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         UCI.inputPrint();
-        long startTime=System.currentTimeMillis();
+        UCI.inputPrint();
+        pion.stringFen("rnbqkbnr/ppp1pppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        UCI.inputPrint();
+        long startTime = System.currentTimeMillis();
         System.out.println(PVS.pvSearch(-1000,1000,BP,BN,BB,BR,BQ,BK,NP,NN,NB,NR,NQ,NK,EP,CWK,CWQ,CBK,CBQ,!MouveB,0));
-        long endTime=System.currentTimeMillis();
-        System.out.println("That took "+(endTime-startTime)+" milliseconds");
+        long endTime = System.currentTimeMillis();
+        System.out.println("That took " + (endTime - startTime) + " milliseconds");
         UCI.uciCommunication();
     }
 
